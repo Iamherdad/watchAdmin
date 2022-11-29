@@ -3,8 +3,6 @@ import { Button, Form, Input, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
 import { uploadVersion } from "@/service/modules/version";
-// import { ArrayBufferToJson } from "util";
-import fs from "fs";
 
 export default function content() {
   const [sendFileList, setSendFiles] = useState([]);
@@ -17,7 +15,7 @@ export default function content() {
     },
     onChange(info) {
       if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
+        // console.log(info.file, info.fileList);
       }
       if (info.file.status === "done") {
         message.success(`${info.file.name} file uploaded successfully`);
@@ -26,27 +24,47 @@ export default function content() {
       }
     },
     beforeUpload: (file) => {
-      console.log(file, "file");
       return false;
     },
   };
   //上传
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     const { desc, linkurl, hardwareVer, softwareVer, uploadurl } = values;
-    console.log(uploadurl, "uploadurl");
-    let fRender = new FileReader();
-    fRender.readAsDataURL(uploadurl[0].originFileObj);
-    fRender.onload = async (event) => {
-      let result = await uploadVersion({
-        dataUrl: event.target.result,
-        name: "version",
-      });
+
+    // let result = await uploadVersion({
+    //   dataUrl: uploadurl[0].originFileObj,
+    //   name: uploadurl[0].originFileObj.name,
+    // });
+
+    // //转url上传
+    // let fReader = new FileReader();
+    // fReader.readAsDataURL(uploadurl[0].originFileObj);
+    // fReader.onload = async (event) => {
+    //   console.log(event, "event");
+    //   let result = await uploadVersion({
+    //     dataUrl: event.target.result,
+    //     name: uploadurl[0].originFileObj.name,
+    //   });
+    // };
+
+    //转formData上传
+
+    let fReader = new FileReader();
+    fReader.readAsArrayBuffer(uploadurl[0].originFileObj);
+    fReader.onload = async (event) => {
+      let excelFile = event.target.result;
+      let formData = new FormData();
+      // formData.append("excelFile", new Blob([excelFile]));
+      formData.append("excelFile", excelFile);
+      let result = await uploadVersion(formData);
+
+      console.log(result, "result");
     };
+
     return;
   };
   //选择文件回调
   const normFile = (e) => {
-    // console.log("Upload event:", e);
     if (Array.isArray(e)) {
       return e;
     }

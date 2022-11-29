@@ -81,7 +81,7 @@ export default function index() {
         <Table dataSource={dataSource} columns={columns} />
       </div>
       <Modal
-        title="Basic Modal"
+        title="版本详情"
         open={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}

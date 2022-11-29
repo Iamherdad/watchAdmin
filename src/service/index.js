@@ -15,6 +15,7 @@ export default function axios(option) {
     instance.interceptors.request.use(
       (config) => {
         showLoading();
+
         return config;
       },
       (err) => {
@@ -28,7 +29,7 @@ export default function axios(option) {
         return response.data;
       },
       (err) => {
-        console.log(err, "相应拦截错误");
+        console.log(err, "响应拦截错误");
         if (err && err.response) {
           switch (err.response.status) {
             case 400:
