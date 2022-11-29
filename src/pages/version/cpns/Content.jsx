@@ -31,37 +31,12 @@ export default function content() {
   const onFinish = async (values) => {
     const { desc, linkurl, hardwareVer, softwareVer, uploadurl } = values;
 
-    // let result = await uploadVersion({
-    //   dataUrl: uploadurl[0].originFileObj,
-    //   name: uploadurl[0].originFileObj.name,
-    // });
+    let excelFile = uploadurl[0].originFileObj;
+    let formData = new FormData();
+    formData.append("excelFile", excelFile);
+    let result = await uploadVersion(formData);
 
-    // //转url上传
-    // let fReader = new FileReader();
-    // fReader.readAsDataURL(uploadurl[0].originFileObj);
-    // fReader.onload = async (event) => {
-    //   console.log(event, "event");
-    //   let result = await uploadVersion({
-    //     dataUrl: event.target.result,
-    //     name: uploadurl[0].originFileObj.name,
-    //   });
-    // };
-
-    //转formData上传
-
-    let fReader = new FileReader();
-    fReader.readAsArrayBuffer(uploadurl[0].originFileObj);
-    fReader.onload = async (event) => {
-      let excelFile = event.target.result;
-      let formData = new FormData();
-      // formData.append("excelFile", new Blob([excelFile]));
-      formData.append("excelFile", excelFile);
-      let result = await uploadVersion(formData);
-
-      console.log(result, "result");
-    };
-
-    return;
+    console.log(result, "result");
   };
   //选择文件回调
   const normFile = (e) => {

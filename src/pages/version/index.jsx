@@ -10,7 +10,6 @@ export default function index() {
 
   useEffect(() => {
     getVersion().then((res) => {
-      console.log(res.data);
       setVersionList(res.data);
     });
   }, []);
