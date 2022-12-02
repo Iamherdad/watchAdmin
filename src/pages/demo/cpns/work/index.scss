@@ -1,0 +1,67 @@
+.edit-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+  .ipt {
+    margin: 10px 0;
+  }
+  .work-box {
+    width: 200px;
+    height: 200px;
+    background-color: #272727;
+    padding: 8px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .item {
+      width: 28.8px;
+      height: 28.8px;
+      margin: 4px;
+      box-sizing: border-box;
+      border-radius: 3px;
+    }
+    .dark-box {
+      display: flex;
+      flex-wrap: wrap;
+      position: absolute;
+      width: 184px;
+      .dark-item {
+        background-color: #444;
+      }
+    }
+    .bright-box {
+      position: absolute;
+      display: flex;
+      flex-wrap: wrap;
+      width: 184px;
+      .bright-item {
+        background-color: #04a7fe;
+        cursor: pointer;
+      }
+    }
+  }
+  .paintbrush {
+    width: 300px;
+    margin-top: 15px;
+    display: flex;
+    margin-bottom: 50px;
+    .paintbrush-item {
+      flex: 1;
+      margin: 4px;
+      box-sizing: border-box;
+      text-align: center;
+      background-color: #04a7fe;
+      cursor: pointer;
+      width: 21.8px;
+      height: 24px;
+    }
+    .paintbrush-item:nth-child(1) {
+      border: 1px solid #04a7fe;
+    }
+    .active {
+      border: 1px solid white;
+    }
+  }
+}

@@ -7,6 +7,7 @@ import Gui from "@/pages/gui";
 import Version from "@/pages/version";
 import Star from "@/pages/star";
 import NotFind from "@/pages/404";
+import Demo from "@/pages/demo";
 
 const routes = [
   {
@@ -36,6 +37,10 @@ const routes = [
       {
         path: "version",
         element: <Version />,
+      },
+      {
+        path: "demo",
+        element: <Demo />,
       },
     ],
   },

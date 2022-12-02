@@ -43,6 +43,11 @@ export default function index() {
               icon: <UploadOutlined />,
               label: "星球管理",
             },
+            {
+              key: "demo",
+              icon: <UploadOutlined />,
+              label: "示例管理",
+            },
           ]}
         />
       </Sider>

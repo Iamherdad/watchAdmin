@@ -1,0 +1,12 @@
+.star {
+  // height: 100%;
+  max-height: 100%;
+
+  .userInfo {
+    display: flex;
+    flex-direction: column;
+    .authorName {
+      font-size: 12px;
+    }
+  }
+}

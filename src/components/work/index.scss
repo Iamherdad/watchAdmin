@@ -1,0 +1,32 @@
+.work {
+  width: 90px;
+  height: 90px;
+  background-color: #272727;
+  padding: 8px;
+  border-radius: 4px;
+  .item {
+    width: 12.8px;
+    height: 12.8px;
+    margin: 1px;
+    box-sizing: border-box;
+    border-radius: 3px;
+  }
+  .dark-box {
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    width: 74px;
+    .dark-item {
+      background-color: #444;
+    }
+  }
+  .bright-box {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    width: 74px;
+    .bright-item {
+      background-color: #04a7fe;
+    }
+  }
+}
