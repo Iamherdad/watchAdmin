@@ -6,10 +6,11 @@ export function getALLdemo() {
   });
 }
 
-export function addDemo(data) {
+export function setDemo(data) {
   return axios({
     url: "/preinstall",
     method: "post",
     data: data,
   });
 }
+

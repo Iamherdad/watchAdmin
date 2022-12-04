@@ -8,6 +8,7 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
+import Icon from "@/components/icon";
 const { Header, Sider, Content } = Layout;
 
 import "./index.scss";
@@ -30,22 +31,26 @@ export default function index() {
           items={[
             {
               key: "gui",
-              icon: <UserOutlined />,
+              // icon: <UserOutlined />,
+              icon: <Icon type="icon-data" />,
               label: "数据概览",
             },
             {
               key: "version",
-              icon: <VideoCameraOutlined />,
+              // icon: <VideoCameraOutlined />,
+              icon: <Icon type="icon-version" />,
               label: "版本管理",
             },
             {
               key: "star",
-              icon: <UploadOutlined />,
+              // icon: <UploadOutlined />,
+              icon: <Icon type="icon-diqiu" />,
               label: "星球管理",
             },
             {
               key: "demo",
-              icon: <UploadOutlined />,
+              // icon: <UploadOutlined />,
+              icon: <Icon type="icon-yanshizhong-pangguanzhe" />,
               label: "示例管理",
             },
           ]}

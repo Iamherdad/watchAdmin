@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setWork, setBrush, setWorkname } from "@/store/modules/demo";
+import { Input } from "antd";
+import Icon from "@/components/icon";
+import {
+  setWork,
+  setBrush,
+  setWorkname,
+  clearWork,
+} from "@/store/modules/demo";
 import classnames from "classnames";
 import "./index.scss";
-import { Input } from "antd";
+
 const screenDisplay = true;
 const COLOR_STYLE_LIST = [
   {
@@ -65,6 +72,10 @@ export default function index(props) {
   const iptChange = (e) => {
     dispatch(setWorkname({ workName: e.target.value }));
   };
+
+  const removeWork = () => {
+    dispatch(clearWork());
+  };
   return (
     <div className="edit-box">
       <div className="ipt">
@@ -87,6 +98,9 @@ export default function index(props) {
               ></div>
             );
           })}
+        </div>
+        <div className="remove" onClick={removeWork}>
+          <Icon type="icon-clear" />
         </div>
       </div>
       {/* 画笔 */}

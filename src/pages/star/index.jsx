@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Space, Table, Tag, Avatar, Image, message } from "antd";
+import { Button, Table, Tag, Avatar, Image, message, Popconfirm } from "antd";
 import Work from "@/components/work";
 
 import { getStarWorkList, delStarWork } from "@/service/modules/star";
@@ -65,9 +65,15 @@ export default function index() {
       title: "管理",
       key: "edit",
       render: (_, record) => (
-        <Space size="middle">
-          <a onClick={() => delWork(record.id)}> {record.edit}</a>
-        </Space>
+        <Popconfirm
+          title="确定下线该作品吗"
+          onConfirm={() => confirm(record.id)}
+          onCancel={cancel}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button> {record.edit}</Button>
+        </Popconfirm>
       ),
     },
   ];
@@ -86,21 +92,24 @@ export default function index() {
     };
   });
 
-  const delWork = async (w) => {
-    const result = await delStarWork(w);
+  const confirm = async (id) => {
+    const result = await delStarWork(id);
     if (result.deleted == 1) {
       getStarWorkList().then((res) => {
         setWorkList(res.data);
-        message.success("删除成功");
+        message.success("下线成功");
       });
     } else {
       message.error("网络繁忙");
     }
   };
-
+  const cancel = (e) => {
+    console.log(e);
+    message.error("Click on No");
+  };
   return (
     <div className="star">
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={data} className="custom-table" />
     </div>
   );
 }

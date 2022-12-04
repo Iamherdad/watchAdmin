@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, message, Modal, Space, Table, Tag } from "antd";
+import { Button, message, Modal, Space, Table, Popconfirm } from "antd";
 import Work from "./cpns/work";
 import CommonWork from "@/components/work";
-import { useSelector } from "react-redux";
-
-import { addDemo, getALLdemo } from "@/service/modules/demo";
+import { useSelector, useDispatch } from "react-redux";
+import { resetWorkInfo } from "@/store/modules/demo";
+import { getALLdemo, setDemo } from "@/service/modules/demo";
+import { timeFormat } from "@/utils";
 import "./index.scss";
 
 export default function index() {
@@ -12,12 +13,12 @@ export default function index() {
   const work = useSelector((store) => store.demolSlice.work);
   const iptVal = useSelector((store) => store.demolSlice.workName);
   const [demoList, setDemList] = useState([]);
+  const dispatch = useDispatch();
   const workMap = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   ];
   useEffect(() => {
     getALLdemo().then((res) => {
-      console.log(res.data);
       setDemList(res.data);
     });
   }, []);
@@ -25,14 +26,13 @@ export default function index() {
     {
       title: "试例",
       dataIndex: "work",
-      render: (text) => (
-        <div>{text.workName}</div>
-        // <CommonWork
-        //   workInfo={{
-        //     ledAnimationArray: text.works,
-        //     time: text.timeSlot,
-        //   }}
-        // ></CommonWork>
+      render: (_, text) => (
+        <CommonWork
+          workInfo={{
+            ledAnimationArray: [text.work],
+            time: text.timeSlot,
+          }}
+        ></CommonWork>
       ),
     },
     {
@@ -49,8 +49,16 @@ export default function index() {
       title: "下架",
       key: "tags",
       dataIndex: "tags",
-      render: () => {
-        return <Tag>123</Tag>;
+      render: (_, text) => {
+        return (
+          <Popconfirm
+            onConfirm={() => confirm(text._id)}
+            onCancel={cancel}
+            title="确定下架该示例吗"
+          >
+            <Button>下架</Button>
+          </Popconfirm>
+        );
       },
     },
   ];
@@ -59,33 +67,11 @@ export default function index() {
       key: index,
       work: item.work,
       workName: item.workName,
-      time: item.time || "",
       tags: ["nice", "developer"],
+      time: item.time ? timeFormat(item.time) : "---",
+      _id: item._id,
     };
   });
-  //   const data = [
-  //     {
-  //       key: "1",
-  //       name: "John Brown",
-  //       age: 32,
-  //       address: "New York No. 1 Lake Park",
-  //       tags: ["nice", "developer"],
-  //     },
-  //     {
-  //       key: "2",
-  //       name: "Jim Green",
-  //       age: 42,
-  //       address: "London No. 1 Lake Park",
-  //       tags: ["loser"],
-  //     },
-  //     {
-  //       key: "3",
-  //       name: "Joe Black",
-  //       age: 32,
-  //       address: "Sidney No. 1 Lake Park",
-  //       tags: ["cool", "teacher"],
-  //     },
-  //   ];
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -97,7 +83,7 @@ export default function index() {
     ) {
       return message.error("名称不能为空或无效作品");
     } else {
-      let result = await addDemo({
+      let result = await setDemo({
         type: "add",
         work,
         workName: iptVal,
@@ -109,16 +95,35 @@ export default function index() {
           setDemList(res.data);
         });
         setIsModalOpen(false);
+        dispatch(resetWorkInfo());
       }
     }
   };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const confirm = async (id) => {
+    let result = await setDemo({
+      type: "del",
+      id,
+    });
+    if (result.deleted == "1") {
+      message.success("下架成功");
+      getALLdemo().then((res) => {
+        setDemList(res.data);
+      });
+    } else {
+      message.error("服务器繁忙");
+    }
+  };
+  const cancel = (e) => {
+    message.error("Click on No");
+  };
+
   return (
-    <div>
+    <div className="demo">
       <div>
-        <Button type="primary" onClick={showModal}>
+        <Button type="primary" onClick={showModal} className="upload-btn">
           上传示例
         </Button>
         <Modal
@@ -132,7 +137,7 @@ export default function index() {
           <Work />
         </Modal>
         <div>
-          <Table columns={columns} dataSource={data} />
+          <Table columns={columns} dataSource={data} className="custom-table" />
         </div>
       </div>
     </div>
