@@ -7,17 +7,29 @@
     <title>徽章后台管理</title>
     <style type="text/css">
       .icon {
-         width: 1em; height: 1em;
-         vertical-align: -0.15em;
-         fill: currentColor;
-         overflow: hidden;
+        width: 1em;
+        height: 1em;
+        vertical-align: -0.15em;
+        fill: currentColor;
+        overflow: hidden;
       }
-  </style>
+    </style>
+    <script>
+      console.log(
+        new Date().getTime() - performance.timing.navigationStart,
+        "白屏时间"
+      );
+      window.onload = () => {
+        console.log(
+          new Date().getTime() - performance.timing.navigationStart,
+          "首屏时间"
+        );
+      };
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script src="//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js"></script>
     <script type="module" src="/src/main.jsx"></script>
-    
   </body>
 </html>

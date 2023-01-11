@@ -7,9 +7,14 @@ import loginBoxLeftUrl from "../../assets/images/login_left.png";
 import "./index.scss";
 const Login = () => {
   const navigate = useNavigate();
-  
+
   const onFinish = (values) => {
-    navigate("/home");
+    if (values.username == "kpadmin" && values.password == "qJUeYWZoQPdZsaxB") {
+      navigate("/home");
+      window.localStorage.setItem("token", "kplogin");
+    } else {
+      return message.error("账号密码错误");
+    }
   };
 
   return (
@@ -29,7 +34,6 @@ const Login = () => {
             <Form.Item
               name="username"
               rules={[{ required: true, message: "请输入用户名!" }]}
-              initialValue="admin"
             >
               <Input
                 prefix={<UserOutlined className="site-form-item-icon" />}
@@ -40,7 +44,6 @@ const Login = () => {
             <Form.Item
               name="password"
               rules={[{ required: true, message: "请输入密码!" }]}
-              initialValue="123456"
             >
               <Input.Password
                 prefix={<LockOutlined className="site-form-item-icon" />}

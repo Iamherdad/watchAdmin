@@ -1,17 +1,15 @@
-/*
- * @Author: lipengfei 1401446942@qq.com
- * @Date: 2022-11-23 11:09:00
- * @LastEditors: lipengfei 1401446942@qq.com
- * @LastEditTime: 2022-11-23 11:37:10
- * @FilePath: \watch-admin\src\router\index.jsx
- * @Description:
- *
- * Copyright (c) 2022 by lipengfei 1401446942@qq.com, All Rights Reserved.
- */
-import { useRoutes } from "react-router-dom";
+import { useRoutes, useLocation, Navigate } from "react-router-dom";
 import routes from "./config.js";
 
 const Router = () => {
+  const token = window.localStorage.getItem("token");
+  const location = useLocation();
+  const { pathname } = location;
+  console.log(token, "toekn");
+  if (pathname !== "/login" && !token) {
+    return <Navigate to="/login"></Navigate>;
+  }
+
   return useRoutes(routes);
 };
 

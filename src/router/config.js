@@ -17,6 +17,9 @@ const routes = [
   {
     path: "/login",
     element: <Login />,
+    meta: {
+      auth: true,
+    },
   },
   {
     path: "/home",

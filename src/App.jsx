@@ -1,5 +1,6 @@
 import React from "react";
-import { HashRouter } from "react-router-dom";
+import { HashRouter, useLocation } from "react-router-dom";
+
 import { useSelector } from "react-redux";
 
 import Router from "./router";
